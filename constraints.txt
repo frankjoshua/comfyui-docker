@@ -1,0 +1,6 @@
+# Dependency version constraints for build reproducibility
+# Pin mediapipe to last version with legacy mp.solutions API
+# Required by controlnet_aux which uses mp.solutions.drawing_utils
+# See: https://github.com/Fannovel16/comfyui_controlnet_aux/issues/604
+# Remove this pin once comfyui_controlnet_aux merges PR #613
+mediapipe==0.10.21
