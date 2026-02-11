@@ -136,10 +136,10 @@ RUN echo "Done"
 RUN echo "Installing custom nodes..."
 # Controlnet Preprocessor nodes by Fannovel16
 # RUN cd custom_nodes && git clone https://github.com/Fannovel16/comfy_controlnet_preprocessors && cd comfy_controlnet_preprocessors && python install.py --no_download_ckpts
-# Pin mediapipe via constraints to prevent controlnet_aux from upgrading to a breaking version.
-# mediapipe >=0.10.30 removed the legacy mp.solutions API that controlnet_aux requires.
+# Install controlnet_aux, then downgrade mediapipe to last version with legacy mp.solutions API.
+# mediapipe >=0.10.30 removed mp.solutions which controlnet_aux requires.
 # See: https://github.com/Fannovel16/comfyui_controlnet_aux/issues/604
-RUN cd custom_nodes && git clone https://github.com/Fannovel16/comfyui_controlnet_aux && cd comfyui_controlnet_aux && pip install -r requirements.txt -c /code/constraints.txt
+RUN cd custom_nodes && git clone https://github.com/Fannovel16/comfyui_controlnet_aux && cd comfyui_controlnet_aux && pip install -r requirements.txt && pip install --force-reinstall --no-deps mediapipe==0.10.21
 RUN cd custom_nodes && git clone https://github.com/Stability-AI/stability-ComfyUI-nodes && cd stability-ComfyUI-nodes && pip install -r requirements.txt
 RUN cd custom_nodes && git clone https://github.com/EllangoK/ComfyUI-post-processing-nodes
 # ComfyUI Manager (shallow clone with retry for flaky networks)
